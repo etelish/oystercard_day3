@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   let(:entry_station) {double :entry_station}
+  let(:exit_station) {double :exit_station}
 
   # it { is_expected.to respond_to :top_up }
 
@@ -36,18 +37,34 @@ describe Oystercard do
 
   it 'it stores #touch_in station' do
     subject.top_up(20)
-    expect(subject.touch_in(:entry_station)).to eq (:entry_station)
+    expect(subject.touch_in(:entry_station)).to eq ([:entry_station])
   end
 
-  it 'on #touch_out entry_station is set to nil' do
-    subject.top_up(20)
-    subject.touch_in(:entry_station)
-    expect(subject.touch_out).to eq nil
-  end
+  # it 'on #touch_out entry_station is set to nil' do
+  #   subject.top_up(20)
+  #   subject.touch_in(:entry_station)
+  #   expect(subject.touch_out(:exit_station)).to eq nil
+  # end
 
   it 'deducts fare amount on touch out' do
     subject.top_up(Oystercard::LIMIT)
-    expect{ subject.touch_out }.to change{ subject.balance }.by(-Oystercard::MINIMUM)
+    expect{ subject.touch_out(:exit_station) }.to change{ subject.balance }.by(-Oystercard::MINIMUM)
   end
 
+  it 'oystercard initial trip history is empty' do
+    expect(subject.trip_history).to be_empty
+  end
+
+  it 'stores entry station to trip history during touch in' do
+    subject.top_up(Oystercard::LIMIT)
+    subject.touch_in(:entry_station)
+    expect(subject.trip_history).to eq([:entry_station])
+  end
+
+  it 'stores exit station to trip history during touch out' do
+    subject.top_up(Oystercard::LIMIT)
+    subject.touch_in(:entry_station)
+    subject.touch_out(:exit_station)
+    expect(subject.trip_history).to eq([:entry_station, :exit_station])
+  end
 end

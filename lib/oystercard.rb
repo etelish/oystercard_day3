@@ -8,11 +8,14 @@ class Oystercard
 
   def top_up(amount)
 
-    raise "top up limit of #{LIMIT} reached" if  (@balance + amount) > 90
+    raise "top up limit of #{LIMIT} reached" if  (@balance + amount) > LIMIT
 
     @balance += amount
   end
 
+def deduct(amount)
+  @balance -= amount
+end
 
 
 

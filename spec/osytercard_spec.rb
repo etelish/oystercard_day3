@@ -9,8 +9,13 @@ describe Oystercard do
   end
 
   it 'increases the balance' do
-    subject
-    expect { subject.top_up(7) }.to change {subject.balance }.from(0).to(subject.balance+7)
+    expect { subject.top_up(1) }.to change {subject.balance }.from(0).to(subject.balance+1)
   end
 
+
+  it 'raises error when the limit is exceeded' do
+
+     # subject.top_up(91)
+    expect { subject.top_up(91) }.to raise_error ("top up limit of #{Oystercard::LIMIT} reached")
+  end
 end

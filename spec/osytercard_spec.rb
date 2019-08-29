@@ -28,4 +28,11 @@ describe Oystercard do
   it 'check new oyster card is not in_journey' do
     expect(subject.in_journey?).to eq false
   end
+
+  it "raises exception on touch in if balance is below minimum" do
+    expect {subject.touch_in}.to raise_error ("insufficient funds")
+  end
+
+
+
 end

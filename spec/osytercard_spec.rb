@@ -21,4 +21,11 @@ describe Oystercard do
     subject.top_up(Oystercard::LIMIT)
     expect { subject.deduct(1) }.to change { subject.balance }.from(Oystercard::LIMIT).to(Oystercard::LIMIT - 1)
   end
+
+  it { is_expected.to respond_to :touch_in }
+  it { is_expected.to respond_to :touch_out }
+
+  it 'check new oyster card is not in_journey' do
+    expect(subject.in_journey?).to eq false
+  end
 end

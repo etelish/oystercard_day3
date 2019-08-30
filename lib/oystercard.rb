@@ -27,7 +27,9 @@ class Oystercard
   def touch_out(exit_station)
     deduct(MINIMUM)
     @entry_station = nil
-    @trip_history << exit_station #should push into a hash within the array
+    # @trip_history << exit_station #should push into a hash within the array
+    #@trip_history[-1][exit_station: exit_station]
+    @trip_history[-1][:exit_station] = exit_station
   end
 
   def in_journey?
@@ -40,5 +42,3 @@ class Oystercard
     @balance -= amount
   end
 end
-
-# test comment

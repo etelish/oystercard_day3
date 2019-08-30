@@ -37,7 +37,7 @@ describe Oystercard do
 
   it 'it stores #touch_in station' do
     subject.top_up(20)
-    expect(subject.touch_in(:entry_station)).to eq ([:entry_station])
+    expect(subject.touch_in(:entry_station)).to eq ([{:entry_station=>:entry_station, :exit_station=>nil}])
   end
 
   # it 'on #touch_out entry_station is set to nil' do
@@ -58,13 +58,13 @@ describe Oystercard do
   it 'stores entry station to trip history during touch in' do
     subject.top_up(Oystercard::LIMIT)
     subject.touch_in(:entry_station)
-    expect(subject.trip_history).to eq([:entry_station])
+    expect(subject.trip_history).to eq([{:entry_station=>:entry_station, :exit_station=>nil}])
   end
 
   it 'stores exit station to trip history during touch out' do
     subject.top_up(Oystercard::LIMIT)
     subject.touch_in(:entry_station)
     subject.touch_out(:exit_station)
-    expect(subject.trip_history).to eq([:entry_station, :exit_station])
+    expect(subject.trip_history).to eq([{:entry_station=>:entry_station, :exit_station=> :exit_station}])
   end
 end

@@ -1,8 +1,8 @@
 require 'oystercard'
 
 describe Oystercard do
-  let(:entry_station) {double :entry_station}
-  let(:exit_station) {double :exit_station}
+   let(:entry_station) {double :entry_station}
+   let(:exit_station) {double :exit_station}
 
   # it { is_expected.to respond_to :top_up }
 

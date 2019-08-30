@@ -20,7 +20,8 @@ class Oystercard
   def touch_in(entry_station)
     raise "insufficient funds" if (@balance < MINIMUM)
     @entry_station = entry_station
-    @trip_history << entry_station #should create a hash with key within array
+    # @trip_history << entry_station #should create a hash with key within array
+    @trip_history << {entry_station: entry_station, exit_station: nil}
   end
 
   def touch_out(exit_station)
